@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Real-Time-News-Tracker/static/css/main.ec3d5bf8.css",
+    "main.js": "/Real-Time-News-Tracker/static/js/main.6ee1f7ae.js",
+    "index.html": "/Real-Time-News-Tracker/index.html",
+    "main.ec3d5bf8.css.map": "/Real-Time-News-Tracker/static/css/main.ec3d5bf8.css.map",
+    "main.6ee1f7ae.js.map": "/Real-Time-News-Tracker/static/js/main.6ee1f7ae.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ec3d5bf8.css",
+    "static/js/main.6ee1f7ae.js"
+  ]
+}
