@@ -20,8 +20,7 @@ A responsive React-based web application that fetches and displays real-time new
 
 | Light Mode | Dark Mode |
 |------------|-----------|
-|<img width="516" height="912" alt="image" src="https://github.com/user-attachments/assets/c31414e2-cd10-4683-86c1-258d537cd38b" />|<img width="514" height="911" alt="image" src="https://github.com/user-attachments/assets/dc6b90c0-36ac-40c5-98ce-b827a85f25c9" />
-|
+|<img width="516" height="912" alt="image" src="https://github.com/user-attachments/assets/c31414e2-cd10-4683-86c1-258d537cd38b" />|<img width="514" height="911" alt="image" src="https://github.com/user-attachments/assets/dc6b90c0-36ac-40c5-98ce-b827a85f25c9" />|
 
 ---
 
