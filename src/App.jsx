@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import NewsCard from "./components/NewsCard";
 import CategorySelector from "./components/CategorySelector";
@@ -11,24 +11,33 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [error, setError] = useState(null);
 
-  const fetchNews = async () => {
+  const fetchNews = useCallback(async () => {
     setLoading(true);
     try {
-      const url = `https://newsdata.io/api/1/news?apikey=pub_f1275e5743be4e0cb15103b9f5c9fded&language=${language}&category=${category}${searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : ''}`;
+      const url = `https://newsdata.io/api/1/news?apikey=${
+        process.env.REACT_APP_NEWS_API_KEY
+      }&language=${language}&category=${category}${
+        searchTerm ? `&q=${encodeURIComponent(searchTerm)}` : ""
+      }`;
+
       const res = await axios.get(url);
       setArticles(res.data.results || []);
-    } catch (error) {
-      console.error("Error fetching news:", error);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching news:", err);
+      setError("Failed to fetch news. Please try again later.");
+      setArticles([]);
     }
     setLoading(false);
-  };
+  }, [language, category, searchTerm]);
 
   useEffect(() => {
     fetchNews();
-    const interval = setInterval(fetchNews, 1000 * 60 * 5);
+    const interval = setInterval(fetchNews, 1000 * 60 * 5); // refresh every 5 mins
     return () => clearInterval(interval);
-  }, [category, language]);
+  }, [fetchNews]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -39,7 +48,7 @@ const App = () => {
     <div className={`app ${darkMode ? "dark" : "light"}`}>
       <h1 className="title">📰 Real-Time News Tracker</h1>
 
-      {/* Toggle Switch for Dark/Light Mode */}
+      {/* Toggle Dark/Light Mode */}
       <div className="theme-toggle">
         <label className="switch">
           <input
@@ -80,12 +89,17 @@ const App = () => {
 
       <CategorySelector selected={category} setCategory={setCategory} />
 
+      {/* News Content */}
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : articles.length === 0 ? (
+        <p>No news found 🚫</p>
       ) : (
         <div className="news-container">
-          {articles.map((article, index) => (
-            <NewsCard key={index} article={article} />
+          {articles.map((article) => (
+            <NewsCard key={article.link || article.title} article={article} />
           ))}
         </div>
       )}
